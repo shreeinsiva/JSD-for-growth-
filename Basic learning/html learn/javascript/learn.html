@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript">
+        function image(){
+            document.getElementById("img1").src="./images/"+event.target.value+".jpg";
+        }
+    </script>
+</head>
+<body>
+    <h1>change background images</h1>
+    <label>select colour :</label><br>
+    <input type="radio" onchange="image()" name="img" value="at-infinity-pi4a3mucmea-unsplash   ">sivan<br>
+    <input type="radio" onchange="image()" name="img" value="passport photo 1">vera<br>
+    <center>
+        <img src=""width="60%" id="img1">
+    </center>
+</body>
+</html>

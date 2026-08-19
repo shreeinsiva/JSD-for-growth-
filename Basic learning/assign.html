@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SAC-3 Extra Challenge Grid</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    #controls {
+      margin-bottom: 20px;
+    }
+    #grid {
+      display: grid;
+      gap: 10px;
+    }
+    .column {
+      padding: 20px;
+      color: #fff;
+      text-align: center;
+      border-radius: 5px;
+      position: relative;
+    }
+    .edit-panel {
+      display: none;
+      margin-top: 10px;
+    }
+    .edit-panel input {
+      margin: 5px 0;
+    }
+    .edit-btn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      cursor: pointer;
+      background: #00000055;
+      color: white;
+      border: none;
+      padding: 5px;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Multi-Column Grid App</h2>
+  <div id="controls">
+    <label>Columns: <input type="number" id="colCount" value="3" min="1"></label>
+    <button id="addCol">+</button>
+    <button id="removeCol">-</button>
+  </div>
+  <div id="grid"></div>
+
+  <script>
+    const grid = document.getElementById('grid');
+    const colCountInput = document.getElementById('colCount');
+    const addBtn = document.getElementById('addCol');
+    const removeBtn = document.getElementById('removeCol');
+
+    let columns = [];
+
+    function renderGrid() {
+      grid.style.gridTemplateColumns = `repeat(${columns.length}, 1fr)`;
+      grid.innerHTML = '';
+      columns.forEach((col, index) => {
+        const div = document.createElement('div');
+        div.className = 'column';
+        div.style.backgroundColor = col.color;
+        div.draggable = true;
+        div.dataset.index = index;
+        div.innerHTML = `
+          <strong>${col.title}</strong>
+          <button class="edit-btn">Edit</button>
+          <div class="edit-panel">
+            <input type="text" placeholder="Title" value="${col.title}" class="title-input"><br>
+            <input type="text" placeholder="Color (#hex or name)" value="${col.color}" class="color-input"><br>
+            <select class="color-select">
+              <option value="">Choose preset</option>
+              <option value="red">Red</option>
+              <option value="blue">Blue</option>
+              <option value="green">Green</option>
+              <option value="orange">Orange</option>
+              <option value="purple">Purple</option>
+            </select>
+          </div>
+        `;
+        grid.appendChild(div);
+
+        // Edit button toggle
+        div.querySelector('.edit-btn').addEventListener('click', () => {
+          const panel = div.querySelector('.edit-panel');
+          panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Title input
+        div.querySelector('.title-input').addEventListener('input', e => {
+          col.title = e.target.value;
+          renderGrid();
+        });
+
+        // Color input
+        div.querySelector('.color-input').addEventListener('input', e => {
+          col.color = e.target.value;
+          renderGrid();
+        });
+
+        // Color select
+        div.querySelector('.color-select').addEventListener('change', e => {
+          if (e.target.value) {
+            col.color = e.target.value;
+            renderGrid();
+          }
+        });
+
+        // Drag events
+        div.addEventListener('dragstart', e => {
+          e.dataTransfer.setData('text/plain', index);
+        });
+        div.addEventListener('dragover', e => {
+          e.preventDefault();
+        });
+        div.addEventListener('drop', e => {
+          const fromIndex = e.dataTransfer.getData('text/plain');
+          const toIndex = index;
+          const moved = columns.splice(fromIndex, 1)[0];
+          columns.splice(toIndex, 0, moved);
+          renderGrid();
+        });
+      });
+    }
+
+    function setColumnCount(count) {
+      columns = Array.from({ length: count }, (_, i) => columns[i] || { title: `Column ${i+1}`, color: 'gray' });
+      renderGrid();
+    }
+
+    colCountInput.addEventListener('change', () => {
+      setColumnCount(parseInt(colCountInput.value));
+    });
+
+    addBtn.addEventListener('click', () => {
+      columns.push({ title: `Column ${columns.length+1}`, color: 'gray' });
+      colCountInput.value = columns.length;
+      renderGrid();
+    });
+
+    removeBtn.addEventListener('click', () => {
+      if (columns.length > 1) {
+        columns.pop();
+        colCountInput.value = columns.length;
+        renderGrid();
+      }
+    });
+
+    // Initialize
+    setColumnCount(parseInt(colCountInput.value));
+  </script>
+</body>
+</html>

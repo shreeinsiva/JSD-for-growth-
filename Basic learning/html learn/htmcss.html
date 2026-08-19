@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        #head1{
+            color: blue;
+        }
+        #head2{
+            color: aqua;
+        }
+        #head3{
+            color: brown;
+        }
+        img,div{
+            width: auto;
+            height: 100px;
+            border-radius: 50%;
+            background-color: red;
+            border: 10px dotted blue;
+            position: relative;
+            animation-name: kalvi;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+            animation-duration: 3s;
+            animation-delay: 5s;
+            animation-direction:alternate ;
+        }
+        @keyframes kalvi {
+            from{
+                left: 10px;
+            }
+            to{
+                left: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>id attribute: we can apply different styles for same tag</h1>
+    <h1 id="head3">jammu</h1>
+    <h1 id="head1">kashmir</h1>
+    <h1 id="head2">ladakh</h1>
+    <img src="./images/at-infinity-pi4a3mucmea-unsplash.jpg">
+</body>
+</html>

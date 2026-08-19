@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript">
+        function dis(){
+            var arr=[[11,22,33],[44,55,66],[77,88,99]];
+            for(var i=0;i<3;i++){
+                for(var j=0;j<3;j++){
+                    document.write("  "+arr[i][j]);
+                }
+                document.write("<br>");
+
+            }
+        }
+        const myadd=(a,b,c)=>{
+            var tot=a+b+c;
+            alert(tot);
+        }
+        function reg(){
+            var data=document.getElementById("t1").value;
+            var re=/^[0-9]{10}$/;
+            if(data.match(re))
+            alert("valid");
+        else
+        alert("invalid format")
+        }
+    </script>
+</head>
+<body>
+    <h1><center>nested loop array</center></h1>
+    <input type="button" value="click" onclick="dis()"><br>
+    <h1> <center>array function with parameters</center></h1>
+    <button onclick="myadd(1,2,3)">clickme</button>
+    <h1><center>Regular expression phone no valid</center></h1>
+    <input type="text" id="t1" placeholder="Enter no"><br>
+    <input type="button" value="validate" onclick="reg()"><br>
+    <div id="res"></div>
+    
+</body>
+</html>
